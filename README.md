@@ -20,6 +20,8 @@ You can run the image with the public http port mapped to your local machine and
 $ docker run -t --rm -i -p 127.0.0.1:2113:2113 -v $(pwd)/db:/var/lib/eventstore -v $(pwd)/log:/var/log/eventstore eventstore
 ```
 
+You can completely configure the environment with `ENV` vars. See [this document](http://docs.geteventstore.com/server/3.3.0/command-line-arguments/) for more info.
+
 ### Testing the build
 
 You can start using the HTTP API:
