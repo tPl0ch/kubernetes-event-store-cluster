@@ -8,12 +8,11 @@ MAINTAINER Thomas Ploch "thomas.ploch@tp-solutions.de"
 
 # Set up required env vars
 ENV DEBIAN_FRONTEND=noninteractive \
-  EVENTSTORE_LOG=/var/log/eventstore \
-  EVENTSTORE_DB=/var/lib/eventstore \
   EVENTSTORE_INT_HTTP_PREFIXES=http://127.0.0.1:2112/ \
   EVENTSTORE_EXT_HTTP_PREFIXES=http://*:2113/ \
   EVENTSTORE_INT_IP=127.0.0.1 \
-  EVENTSTORE_EXT_IP=0.0.0.0
+  EVENTSTORE_EXT_IP=0.0.0.0 \
+  EVENTSTORE_ADD_INTERFACE_PREFIXES=0
 
 # Install wget and https transport for apt
 RUN apt-get update && apt-get install -y \
@@ -32,10 +31,10 @@ RUN apt-get install -y eventstore-oss=3.3.0
 EXPOSE 2113 1113 2112 1112
 
 # Create the volumes
-VOLUME $EVENTSTORE_DB $EVENTSTORE_LOG
+VOLUME /var/lib/eventstore /var/log/eventstore
 
 # Run as eventstore user
 USER eventstore
 
 # set entry point to eventstore executable
-ENTRYPOINT ["eventstored"]
+ENTRYPOINT ["eventstored", "--log=/var/log/eventstore", "--db=/var/lib/eventstore"]

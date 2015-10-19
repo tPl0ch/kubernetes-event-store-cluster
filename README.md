@@ -15,6 +15,7 @@ $ docker build -t eventstore .
 ### Running the image
 
 You can run the image with the public http port mapped to your local machine and `log` and `db` folders mapped to your host machine.
+It's exposing `/var/lib/eventstore` (DB) and `/var/log/eventstore` as Volumes.
 
 ```sh
 $ docker run -t --rm -i -p 127.0.0.1:2113:2113 -v $(pwd)/db:/var/lib/eventstore -v $(pwd)/log:/var/log/eventstore eventstore
@@ -30,6 +31,8 @@ You can start using the HTTP API:
 $ curl -i -d @simple-event.txt -H "Content-Type:application/vnd.eventstore.events+json" "http://127.0.0.1:2113/streams/newstream"
 $ curl -i -H "Accept:application/vnd.eventstore.atom+json" "http://127.0.0.1:2113/streams/newstream/0"
 ```
+
+The management console is running under http://127.0.0.1:2113/web/index.html with username `admin` and password `changeit`
 
 ### TODO:
 
