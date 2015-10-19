@@ -9,7 +9,7 @@ By default it's building the latest (currently `3.3.0`) version.
 ```sh
 $ git clone https://github.com/tPl0ch/docker-event-store.git
 $ cd docker-event-store
-$ docker build -t event-store .
+$ docker build -t eventstore .
 ```
 
 ### Running the image
