@@ -1,0 +1,12 @@
+# Files
+LICENSE
+README.md
+simple-event.txt
+
+# Directories
+log/
+db/
+
+# Doesn't really need git
+.gitignore
+.git
