@@ -7,8 +7,13 @@ FROM ubuntu:trusty
 MAINTAINER Thomas Ploch "thomas.ploch@tp-solutions.de"
 
 # Set up required env vars
-ENV EVENTSTORE_PACKAGE_VERSION=3.3.0 \
-  DEBIAN_FRONTEND=noninteractive
+ENV DEBIAN_FRONTEND=noninteractive \
+  EVENTSTORE_LOG=/var/log/eventstore \
+  EVENTSTORE_DB=/var/lib/eventstore \
+  EVENTSTORE_INT_HTTP_PREFIXES=http://127.0.0.1:2112/ \
+  EVENTSTORE_EXT_HTTP_PREFIXES=http://*:2113/ \
+  EVENTSTORE_INT_IP=127.0.0.1 \
+  EVENTSTORE_EXT_IP=0.0.0.0
 
 # Install wget and https transport for apt
 RUN apt-get update && apt-get install -y \
@@ -20,16 +25,8 @@ RUN wget -O - https://apt-oss.geteventstore.com/eventstore.key | apt-key add - &
   echo "deb [arch=amd64] https://apt-oss.geteventstore.com/ubuntu/ trusty main" > /etc/apt/sources.list.d/eventstore.list && \
   apt-get update
 
-# make sure the package repository is up to date
-RUN apt-get install -y eventstore-oss=$EVENTSTORE_PACKAGE_VERSION
-
-# Default directories
-ENV EVENTSTORE_LOG=/var/log/eventstore \
-  EVENTSTORE_DB=/var/lib/eventstore \
-  EVENTSTORE_INT_HTTP_PREFIXES=http://127.0.0.1:2112/ \
-  EVENTSTORE_EXT_HTTP_PREFIXES=http://*:2113/ \
-  EVENTSTORE_INT_IP=127.0.0.1 \
-  EVENTSTORE_EXT_IP=0.0.0.0
+# Install specific version of eventstore. Change to build a different versioned image
+RUN apt-get install -y eventstore-oss=3.3.0
 
 # Expose the public/internal ports
 EXPOSE 2113 1113 2112 1112

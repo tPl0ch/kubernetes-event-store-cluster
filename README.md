@@ -1,8 +1,10 @@
 # EventStore - Dockerfile
 
-This is an up-to-date Dockerfile for installing [EventStore](https://geteventstore.com/) without the mono runtime within an `ubuntu:trusty` image.
+This is an up-to-date Dockerfile for installing [EventStore](https://geteventstore.com/) without the mono runtime within an `ubuntu:trusty` image as base.
 
 ### Building the image
+
+By default it's building the latest (currently `3.3.0`) version.
 
 ```sh
 $ git clone https://github.com/tPl0ch/docker-event-store.git
