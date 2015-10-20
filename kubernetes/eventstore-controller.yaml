@@ -30,10 +30,10 @@ spec:
           value: "0.0.0.0"
         - name: EVENTSTORE_EXT_IP
           value: "0.0.0.0"
-        - name: EVENTSTORE_EVENTSTORE_EXT_HTTP_PREFIXES
-          value: ~
-        - name: EVENTSTORE_EVENTSTORE_INT_HTTP_PREFIXES
-          value: ~
+        - name: EVENTSTORE_EXT_HTTP_PREFIXES
+          value: "http://*:2113/"
+        - name: EVENTSTORE_INT_HTTP_PREFIXES
+          value: "http://*:2112/"
         volumeMounts:
         - mountPath: /var/lib/eventstore
           name: data
