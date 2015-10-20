@@ -2,14 +2,17 @@ kind: ReplicationController
 apiVersion: v1
 metadata:
   name: eventstore-cluster
+  namespace: eventstore
 spec:
   replicas: 3
   selector:
     name: eventstore-node
   template:
     metadata:
+      namespace: eventstore
       labels:
         name: eventstore-node
+        app: eventstore-cluster
     spec:
       containers:
       - name: eventstore-node
@@ -25,7 +28,7 @@ spec:
         - name: EVENTSTORE_CLUSTER_GOSSIP_PORT
           value: "2112"
         - name: EVENTSTORE_CLUSTER_DNS
-          value: "eventstore-service.default.svc.cluster.local"
+          value: "eventstore-service.eventstore"
         - name: EVENTSTORE_INT_IP
           value: "0.0.0.0"
         - name: EVENTSTORE_EXT_IP
