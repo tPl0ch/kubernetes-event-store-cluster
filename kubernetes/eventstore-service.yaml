@@ -1,0 +1,24 @@
+kind: Service
+apiVersion: v1
+metadata:
+  name: eventstore-service
+spec:
+  selector:
+    name: eventstore-node
+  ports:
+  - name: 'external-http'
+    protocol: TCP
+    port: 2113
+    targetPort: 2113
+  - name: 'internal-http'
+    protocol: TCP
+    port: 2112
+    targetPort: 2113
+  - name: 'external-tcp'
+    protocol: TCP
+    port: 1113
+    targetPort: 1113
+  - name: 'internal-tcp'
+    protocol: TCP
+    port: 1112
+    targetPort: 1112
