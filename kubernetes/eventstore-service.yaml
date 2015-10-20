@@ -2,19 +2,19 @@ kind: Service
 apiVersion: v1
 metadata:
   name: eventstore-service
-  namespace: eventstore
 spec:
+  clusterIP: None
   selector:
     name: eventstore-node
   ports:
-  - name: 'external-http'
+  - name: 'internal-http'
     protocol: TCP
     port: 2113
     targetPort: 2113
-  - name: 'internal-http'
+  - name: 'external-http'
     protocol: TCP
-    port: 2112
-    targetPort: 2112
+    port: 2114
+    targetPort: 2114
   - name: 'external-tcp'
     protocol: TCP
     port: 1113

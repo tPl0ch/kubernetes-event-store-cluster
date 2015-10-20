@@ -2,14 +2,12 @@ kind: ReplicationController
 apiVersion: v1
 metadata:
   name: eventstore-cluster
-  namespace: eventstore
 spec:
   replicas: 3
   selector:
     name: eventstore-node
   template:
     metadata:
-      namespace: eventstore
       labels:
         name: eventstore-node
         app: eventstore-cluster
@@ -19,24 +17,34 @@ spec:
         image: dcr.mfb.io/eventstore
         ports:
         - containerPort: 2113
-        - containerPort: 2112
+        - containerPort: 2114
         - containerPort: 1113
         - containerPort: 1112
         env:
         - name: EVENTSTORE_CLUSTER_SIZE
           value: "3"
         - name: EVENTSTORE_CLUSTER_GOSSIP_PORT
-          value: "2112"
+          value: "2113"
         - name: EVENTSTORE_CLUSTER_DNS
-          value: "eventstore-service.eventstore"
+          value: "eventstore-service.default.svc.cluster.local"
         - name: EVENTSTORE_INT_IP
-          value: "0.0.0.0"
+          valueFrom:
+            fieldRef:
+              fieldPath: status.podIP
         - name: EVENTSTORE_EXT_IP
-          value: "0.0.0.0"
+          valueFrom:
+            fieldRef:
+              fieldPath: status.podIP
+        - name: EVENTSTORE_INT_HTTP_PORT
+          value: "2113"
+        - name: EVENTSTORE_EXT_HTTP_PORT
+          value: "2114"
         - name: EVENTSTORE_EXT_HTTP_PREFIXES
-          value: "http://*:2113/"
+          value: "http://*:2114/"
         - name: EVENTSTORE_INT_HTTP_PREFIXES
-          value: "http://*:2112/"
+          value: "http://*:2113/"
+        - name: EVENTSTORE_GOSSIP_ALLOWED_DIFFERENCE_MS
+          value: "600000"
         volumeMounts:
         - mountPath: /var/lib/eventstore
           name: data
