@@ -15,6 +15,12 @@ spec:
       containers:
       - name: eventstore-node
         image: dcr.mfb.io/eventstore
+        livenessProbe:
+          httpGet:
+            path: /stats
+            port: 2114
+          initialDelaySeconds: 30
+          timeoutSeconds: 1
         ports:
         - containerPort: 2113
         - containerPort: 2114

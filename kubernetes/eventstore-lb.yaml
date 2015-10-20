@@ -1,0 +1,14 @@
+kind: Service
+apiVersion: v1
+metadata:
+  name: eventstore-lb
+spec:
+  type: NodePort
+  selector:
+    name: eventstore-node
+  ports:
+  - name: 'external-http'
+    protocol: TCP
+    port: 2114
+    targetPort: 2114
+    nodePort: 30061
