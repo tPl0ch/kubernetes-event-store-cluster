@@ -1,4 +1,6 @@
-# EventStore - Dockerfile
+# EventStore
+
+## Dockerfile
 
 This is an up-to-date Dockerfile for installing [EventStore](https://geteventstore.com/) without the mono runtime within an `ubuntu:trusty` image as base.
 
@@ -34,6 +36,14 @@ $ curl -i -H "Accept:application/vnd.eventstore.atom+json" "http://127.0.0.1:211
 
 The management console is running under http://127.0.0.1:2113/web/index.html with username `admin` and password `changeit`
 
-### TODO:
+## Kubernetes
 
-Add documentation about cluster deploys
+You can easily create the cluster in kubernetes by running:
+
+```sh
+$ kubectl create -f kubernetes/eventstore-controller.yaml
+$ kubectl create -f kubernetes/eventstore-service.yaml
+$ kubectl create -f kubernetes/eventstore-lb.yaml
+```
+
+The cluster is using an `emptyDir` configuration which means that the storage will be wiped when a pod goes down. You will need to change this when you'd try to seriously use this.
