@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
       - name: eventstore-node
-        image: dcr.mfb.io/eventstore
+        image: your.private.registry/eventstore
         livenessProbe:
           httpGet:
             path: /
